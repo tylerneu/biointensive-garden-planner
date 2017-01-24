@@ -1,0 +1,66 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Garden</title>
+  <meta name="description" content="Garden">
+
+  <link rel="stylesheet" href="garden.css">
+
+  <style type="text/css">
+  html, body
+{
+  border: 0;
+  margin: 0;
+  padding: 5px;
+  font-family: Tahoma;
+  font-size: 9pt;
+}
+
+#DEBUG
+{
+  height: 60px;
+  width: 350px;
+}
+
+#SVG_DND_HOLDER_1
+{
+  background-color: #eee;
+  border: 1px solid #bbb;
+
+  width: 1200px;
+  height: 480px;
+
+  margin: 0px;
+  padding: 0px;
+}
+
+</style>
+
+<title>RaphaelJS drag-and-drop on steroids</title>
+
+</head>
+
+<body>
+  <div id="DEBUG">Drag the small box or circle</div>
+  <div>
+      <span class='s20'>2"</span>
+      <span class='s40'>4"</span>
+      <span class='s60'>6"</span>
+      <span class='s80'>8"</span>
+      <span class='s100'>10"</span>
+      <span class='s120'>12"</span>
+      <span class='s180'>18"</span>
+      <span class='s240'>24"</span>
+      <span class='s360'>36"</span>
+  </div>
+  <div id="SVG_DND_HOLDER_1"></div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/1.5.2/raphael-min.js"></script>
+  <script src="garden.js"></script>
+</body>
+</html>

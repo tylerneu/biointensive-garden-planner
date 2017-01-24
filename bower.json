@@ -1,0 +1,18 @@
+{
+  "name": "Garden",
+  "main": "Garden.js",
+  "authors": [
+    "Tyler Neu <tyler.neu@icainformatics.com>"
+  ],
+  "description": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
