@@ -1,0 +1,31 @@
+dragBoundFunc: function(pos) {
+
+  console.log(pos);
+
+  // var x = Math.round(pos.x / 25) * 25 / 2;
+  // var y = Math.round(pos.y / 25) * 25 / 2;
+
+  var x = pos.x;
+  var y = pos.y;
+
+  // if (x < (0 - (stage.getWidth() / 2) + radius)) {
+  //   x = (0 - (stage.getWidth() / 2) + radius)
+  // } else if (x > (stage.getWidth() / 2)) {
+  //   x = stage.getWidth() / 2 - radius;
+  // } else {
+    x = Math.ceil(pos.x / 30) * 30;
+  // }
+  //
+  // if (y < (0 - (stage.getHeight() / 2) + radius)) {
+  //   y = (0 - (stage.getHeight() / 2) + radius - 10)
+  // } else if (y > (stage.getHeight() / 2 - radius)) {
+  //   y = stage.getHeight() / 2 - radius + 10;
+  // } else {
+    y = Math.ceil(pos.y / 30) * 30;
+  // }
+
+  return {
+      x: x,
+      y: y,
+  }
+}

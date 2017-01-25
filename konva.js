@@ -1,105 +1,143 @@
 $(document).ready(function() {
 
-  // first we need to create a stage
+  var width = 240;
+  var height = 480;
+
   var stage = new Konva.Stage({
     container: 'draw-shapes',   // id of container <div>
-    width: 500,
-    height: 500
+    width: width,
+    height: height
   });
 
-  var grid = new Konva.Layer();
+  var radius = 60;
+  var hex_height = .5 * Math.sqrt(3) * radius;
 
-  var radius = 75;
-
-  // i = 25;
-  // while (i < 500) {
-  //
-  //   grid.add(new Konva.Line({
-  //     points: [0, i, 500, i],
-  //     stroke: '#F0F0F0',
-  //     strokeWidth: 1,
-  //   }));
-  //
-  //   grid.add(new Konva.Line({
-  //     points: [i, 0, i, 500],
-  //     stroke: '#F0F0F0',
-  //     strokeWidth: 1,
-  //   }));
-  //
-  //   i += 25;
-  // }
-
-
-   stage.add(grid);
-
-  // then create layer
   var layer = new Konva.Layer();
+  var plant_layer = new Konva.Layer();
 
-  addPlant(stage, layer, radius);
+  var y = (height / 2 * -1);
+  var x_offset = false;
+
+  while (y < height / 2 + radius) {
+
+    var x = width / 2 * -1;
+
+    if (x_offset) {
+     x += radius;
+    }
+
+    while (x < width / 2 + radius) {
+
+      addSpacing(stage, layer, radius, x, y);
+
+      addPlant(stage, plant_layer, x + width/2, y + height/2, radius);
+      addPlant(stage, plant_layer, x + width/2 - radius/2, y + height/2 - (hex_height), radius);
+      addPlant(stage, plant_layer, x + width/2 + radius/2, y + height/2 - (hex_height), radius);
+      addPlant(stage, plant_layer, x + width/2 + radius, y + height/2, radius);
+
+      x += radius * 2;
+    }
+
+    y += hex_height * 2;
+    x_offset = !x_offset;
+  }
 
   stage.add(layer);
+  stage.add(plant_layer);
 
-  $('#add').click(function() {
-    layer.add(addPlant(stage, radius));
-    layer.draw()
+  var plant_count = 0;
+  plant_layer.children.forEach(function(child) {
+    if (child.name() == 'plant') { plant_count++; };
   })
+  $('#plant_count').html(plant_count);
 
 });
 
-function addPlant(stage, layer, radius) {
+function addPlant(stage, layer, x, y, radius) {
 
-  // var group = new Konva.Group({
-  //      draggable: true
-  //  });
+  if (x - radius/2 + 1 > 0 && x + radius/2 + 1 < stage.getWidth() && y - radius/2 + 1 > 0 & y + radius/2 + 1 < stage.getHeight()) {
+    layer.add(new Konva.Circle({
+      x: x,
+      y: y,
+      radius: radius/2,
+      fill: '#ACACAC',
+      strokeWidth: 0,
+      opacity: 0.25,
+    }));
 
-  layer.add(new Konva.Line({
-    points: [stage.getWidth() / 2, stage.getHeight() / 2 - radius, stage.getWidth() / 2, stage.getHeight() / 2 + radius],
-    stroke: 'black',
+    layer.add(new Konva.Circle({
+      x: x,
+      y: y,
+      radius: 10,
+      fill: 'green',
+      strokeWidth: 0,
+      name: 'plant',
+    }));
+  }
+
+}
+
+function addSpacing(stage, layer, radius, x, y) {
+
+  var group = new Konva.Group({
+    x: x,
+    y: y,
+   });
+
+   var points = [
+     stage.getWidth() / 2 - radius, stage.getHeight() / 2,
+     stage.getWidth() / 2 + radius, stage.getHeight() / 2
+   ];
+
+  group.add(new Konva.Line({
+    points: points,
+    stroke: '#ACACAC',
     strokeWidth: 1,
   }));
 
-  layer.add(new Konva.Line({
-    points: [stage.getWidth() / 2 - radius + 10, stage.getHeight() / 2, stage.getWidth() / 2 + radius - 10, stage.getHeight() / 2],
-    stroke: 'black',
+
+  points = [
+    stage.getWidth() / 2 - radius / 2,
+    stage.getHeight() / 2 - radius + 10 + 6,
+
+    stage.getWidth() / 2 + radius / 2,
+    stage.getHeight() / 2 + radius - 10 - 6,
+  ];
+
+  group.add(new Konva.Line({
+    points: points,
+    stroke: '#ACACAC',
     strokeWidth: 1,
   }));
+
+
+  points = [
+    stage.getWidth() / 2 - radius / 2,
+    stage.getHeight() / 2 + radius - 10 - 6,
+
+    stage.getWidth() / 2 + radius / 2,
+    stage.getHeight() / 2 - radius + 10 + 6
+  ];
+
+  group.add(new Konva.Line({
+    points: points,
+    stroke: '#ACACAC',
+    strokeWidth: 1,
+  }));
+
 
   var plant = new Konva.RegularPolygon({
     x: stage.getWidth() / 2,
     y: stage.getHeight() / 2,
     radius: radius,
     sides: 6,
-
-    stroke: 'black',
+    stroke: '#ACACAC',
     strokeWidth: 0,
-    draggable: true,
-    dragBoundFunc: function(pos) {
-
-      var x;
-      if (pos.x > (stage.getWidth() - radius)) {
-        x = stage.getWidth() - radius + 10;
-      } else if (pos.x < (radius)) {
-        x = radius - 10;
-      } else {
-        x = Math.round(pos.x / 25) * 25;
-      }
-
-      var y;
-      if (pos.y > (stage.getHeight() - radius)) {
-        y = stage.getHeight() - radius;
-      } else if (pos.y < (radius)) {
-        y = radius;
-      } else {
-        y = Math.round(pos.y / 25) * 25;
-      }
-
-      return {
-          x: x,
-          y: y,
-      }
-    }
-
+    rotation: 30,
   });
 
-  layer.add(plant);
+
+  group.add(plant);
+
+  layer.add(group);
 }

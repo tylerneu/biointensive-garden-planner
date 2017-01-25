@@ -1,0 +1,19 @@
+// var grid = new Konva.Layer();
+// i = 30;
+// while (i < 600) {
+//
+//   grid.add(new Konva.Line({
+//     points: [0, i, 600, i],
+//     stroke: '#F0F0F0',
+//     strokeWidth: 1,
+//   }));
+//
+//   grid.add(new Konva.Line({
+//     points: [i, 0, i, 600],
+//     stroke: '#F0F0F0',
+//     strokeWidth: 1,
+//   }));
+//
+//   i += 30;
+// }
+// stage.add(grid);
